@@ -23,10 +23,10 @@
         </div>
         <hr>
         <div style="text-align: center;">
-            <label><input onclick="fnTest()" type="radio" name="subject2" >자바</label>
-            <label><input onclick="fnTest()" type="radio" name="subject2" >오라클</label>
-            <label><input onclick="fnTest()" type="radio" name="subject2" >html</label>
-            <label><input onclick="fnTest()" type="radio" name="subject2" >jquery</label>
+            <label><input onclick="fnTest('java')" type="radio" name="subject2" >자바</label>
+            <label><input onclick="fnTest('oracle')" type="radio" name="subject2" >오라클</label>
+            <label><input onclick="fnTest('html')" type="radio" name="subject2" >html</label>
+            <label><input onclick="fnTest('jquery')" type="radio" name="subject2" >jquery</label>
         </div>
         <hr>
         <div style="text-align: center;">
@@ -54,5 +54,10 @@
         //     image.src = "../images/jquery.jpg";
         // }
 
+    }
+
+    function fnTest(subject){
+        let image = document.querySelector("#image");
+        image.src = `../images/${subject}.jpg`;
     }
 </script>
