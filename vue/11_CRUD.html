@@ -30,7 +30,7 @@
                     <th>삭제</th>
                 </tr>
                 <tr v-for="item in list">
-                    <td><input type="radio" name="board"></td>
+                    <td><input type="radio" name="board" v-model="selectItem" :value="item.boardNo"></td>
                     <td>{{item.boardNo}}</td>
                     <td>{{item.title}}</td>
                     <td>{{item.nickName}}</td>
@@ -39,7 +39,7 @@
             </table>
             <br>
             <button @click="fnAddMenu">게시글등록</button>
-            <button @click="kind = 'update'">수정</button>
+            <button @click="fnUpdateMenu">수정</button>
         </div>
 
         <div v-if="kind == 'create'">
@@ -62,16 +62,16 @@
         <div v-if="kind == 'update'">
             <h3>게시글 수정</h3>
             <div>
-                제목 : <label><input></label>
+                제목 : <label><input v-model="info.title"></label>
             </div>
             <div>
-                내용 : <label><input></label>
+                내용 : <label><input v-model="info.contents"></label>
             </div>
             <div>
-                닉네임 : <label><input></label>
+                닉네임 : <label><input v-model="info.nickName"></label>
             </div>
             <div>
-                <button @click="">수정</button>
+                <button @click="fnUpdate">수정</button>
                 <button @click="kind = 'read'">되돌아가기</button>
             </div>
         </div>
@@ -89,6 +89,9 @@
                 title : "",
                 contents : "",
                 nickName : "",
+                selectItem : "",
+                info : {},
+                updateIndex : "",
                 list : [
                     {boardNo : 1, title : "첫번째 게시글", contents : "1빠~~~", nickName : "길동이"},
                     {boardNo : 2, title : "하이요~~~", contents : "HTML 좋아요", nickName : "철수"},
@@ -127,6 +130,27 @@
                         break;
                     }
                 }
+            },
+            fnUpdateMenu : function(){
+                let self = this;
+                if(self.selectItem == ""){
+                    alert("수정할 게시글을 선택해주세요.");
+                    return;
+                }
+                self.kind = 'update';
+                for(let i=0; i<self.list.length; i++){
+                    if(self.list[i].boardNo == self.selectItem){
+                        self.info = {...self.list[i]};
+                        self.updateIndex = i;
+                        break;
+                    }
+                }
+            },
+            fnUpdate : function(){
+                let self = this;
+                self.list[self.updateIndex] = self.info;
+                self.selectItem = "";
+                self.kind = "read";
             }
         }, // methods
         mounted() {
