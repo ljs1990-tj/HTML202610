@@ -23,19 +23,23 @@
             <h3>게시글 목록</h3>
             <table>
                 <tr>
+                    <th>선택</th>
                     <th>번호</th>
                     <th>제목</th>
                     <th>작성자</th>
                     <th>삭제</th>
                 </tr>
                 <tr v-for="item in list">
+                    <td><input type="radio" name="board"></td>
                     <td>{{item.boardNo}}</td>
                     <td>{{item.title}}</td>
                     <td>{{item.nickName}}</td>
-                    <td><button>삭제</button></td>
+                    <td><button @click="fnRemove(item.boardNo)">삭제</button></td>
                 </tr>
             </table>
+            <br>
             <button @click="fnAddMenu">게시글등록</button>
+            <button @click="kind = 'update'">수정</button>
         </div>
 
         <div v-if="kind == 'create'">
@@ -51,6 +55,23 @@
             </div>
             <div>
                 <button @click="fnAddBoard">등록</button>
+                <button @click="kind = 'read'">되돌아가기</button>
+            </div>
+        </div>
+
+        <div v-if="kind == 'update'">
+            <h3>게시글 수정</h3>
+            <div>
+                제목 : <label><input></label>
+            </div>
+            <div>
+                내용 : <label><input></label>
+            </div>
+            <div>
+                닉네임 : <label><input></label>
+            </div>
+            <div>
+                <button @click="">수정</button>
                 <button @click="kind = 'read'">되돌아가기</button>
             </div>
         </div>
@@ -93,6 +114,19 @@
                 }
                 self.list.push(board);
                 self.kind = "read";
+            },
+            fnRemove : function(boardNo){
+                let self = this;
+                if(!confirm("정말 삭제하실?")){
+                    return;
+                }
+
+                for(let i=0; i<self.list.length; i++){
+                    if(self.list[i].boardNo == boardNo){
+                        self.list.splice(i, 1);
+                        break;
+                    }
+                }
             }
         }, // methods
         mounted() {
