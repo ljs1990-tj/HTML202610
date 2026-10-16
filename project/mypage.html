@@ -145,20 +145,20 @@
             
             <div class="input-group">
                 <span>이름</span>
-                <input type="text" placeholder="홍길동">
+                <input type="text" placeholder="홍길동" v-model="info.USERNAME">
             </div>
 
             <div class="input-group">
                 <span>아이디</span>
-                <input disabled class="userId" type="text" placeholder="아이디를 입력해주세요.">                
+                <input v-model="info.USERID" disabled class="userId" type="text" placeholder="아이디를 입력해주세요.">                
             </div>
             <div class="input-group">
                 <span>이메일</span>
-                <input type="text" placeholder="이메일을 입력해주세요.">                
+                <input v-model="info.EMAIL" type="text" placeholder="이메일을 입력해주세요.">                
             </div>
             <div class="input-group">
                 <span>성별</span>
-                <label><input name="gender" type="radio"> 남자</label>
+                <label><input name="gender" type="radio" > 남자</label>
                 <label><input name="gender" type="radio"> 여자</label>
             </div>
 
@@ -174,18 +174,38 @@
         data() {
             return {
                 // 변수 - (key : value)
-                
+                sessionId : "",
+                info : {}
             };
         },
         methods: {
             // 함수(메소드) - (key : function())
-            fnTest: function () {
+            fnGetUser: function () {
                 let self = this;
+                $.ajax({
+                    url: "http://192.168.30.57:3000/user/info",
+                    dataType: "json",
+                    type: "GET",
+                    data: {userId : self.sessionId},
+                    success: function (data) {
+                        console.log(data);
+                        self.info = data.info;
+                    }
+                });
+                
 
             },
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분
+            let self = this;
+            if(localStorage.getItem("sessionId") == null){
+                alert("로그인 후 이용해주세요.");
+                location.href = "Login.html";
+            }
+            self.sessionId = localStorage.getItem("sessionId");
+            self.fnGetUser();
+            
         }
     });
 

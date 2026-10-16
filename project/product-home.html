@@ -33,27 +33,13 @@
         </button>
         <div class="user-profile">
           <div class="avatar">👨‍💻</div>
-          <span class="username">{{sessionName}}</span>
+          <a href="mypage.html" style="text-decoration: none;"><span class="username">{{sessionName}}</span></a>
           <a @click="fnLogout" style="background-color: #797272; padding : 5px; border-radius: 5px;">로그아웃</a>
         </div>
         
       </div>
     </div>
-    <div class="box banner">
-      <div class="swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="banner/banner1.png"></div>
-                <div class="swiper-slide"><img src="banner/banner2.png"></div>
-                <div class="swiper-slide"><img src="banner/banner3.png"></div>
-                <div class="swiper-slide"><img src="banner/banner4.png"></div>
-                <div class="swiper-slide"><img src="banner/banner5.png"></div>
-            </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-        </div>
-
-    </div>
+   
     <div class="box side">
       <div class="side-title">카테고리</div>
       <ul class="category-list">
