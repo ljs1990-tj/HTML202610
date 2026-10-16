@@ -148,8 +148,8 @@
                 <!-- 2. -->
                 <!-- 최초 진입 시 버튼 활성화 -->
                 <!-- result가 true(아이디 사용 가능)가 되면 비활성화 -->
-                <input class="userId" type="text" v-model="userId" placeholder="아이디를 입력해주세요.">
-                
+                <input v-if="!result" class="userId" type="text" v-model="userId" placeholder="아이디를 입력해주세요.">
+                <input v-else disabled class="userId" type="text" v-model="userId" placeholder="아이디를 입력해주세요.">
                 <button @click="fnCheck">중복체크</button>
             </div>
             
@@ -175,8 +175,8 @@
             <!-- 3. -->
             <!-- 최초 진입 시 버튼 비활성화 -->
             <!-- result가 true(아이디 사용 가능)가 되면 활성화 -->
-            <!-- <button class="signup-btn" @click="fnSignUp">가입하기</button>  -->
-            <button class="signup-btn-false" @click="fnSignUp" disabled>가입하기</button> 
+            <button v-if="result" class="signup-btn" @click="fnSignUp">가입하기</button> 
+            <button v-else class="signup-btn-false" disabled>가입하기</button>
 
             <div class="bottom-links">
                 이미 계정이 있으신가요? <a href="#">로그인</a>
@@ -193,7 +193,8 @@
                 userId : "",
                 name : "",
                 pwd1 : "",
-                pwd2 : ""
+                pwd2 : "",
+                result : false // 0. 중복 체크 여부
             };
         },
         methods: {
@@ -215,6 +216,8 @@
                     data : param,
                     success : function (data) {
                         console.log(data);
+                        alert(data.message);
+                        self.result = data.result;
                         
                     }
                 });
@@ -222,7 +225,7 @@
             fnSignUp : function(){
                 let self = this;
                 if(self.pwd1.length < 4){
-                    alert("아이디 4글자 이상");
+                    alert("비밀번호 4글자 이상");
                     return;
                 }
                 if(self.pwd1 != self.pwd2){
@@ -232,17 +235,18 @@
 
                 let param = {
                     userId : self.userId,
-                    name : self.name,
+                    userName : self.name,
                     pwd : self.pwd1
                 };
                 $.ajax({
-                    url: "http://192.168.30.57:3000/add",
+                    url: "http://192.168.30.57:3000/user/join",
                     dataType: "json",
                     type: "GET",
                     data : param,
                     success : function (data) {
                         console.log(data);
-                        
+                        alert(data.message);
+                        location.href="Login.html";
                         
                     }
                 });
