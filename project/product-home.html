@@ -60,45 +60,16 @@
     </div>
 
     <div class="box content">
-      <div class="product-card">
-        <img src="../images/ryan1.jpg" alt="상품 1" class="product-img">
+      <div v-for="item in list" class="product-card" @click="fnView(item.PRODUCT_ID)">
+        <img :src="item.PATH" alt="상품 1" class="product-img">
         <div class="product-info">
-          <div class="product-name">갤럭시 S24</div>
-          <div class="product-price">15,900원</div>
+          <div class="product-name">{{item.PRODUCT_NAME}}</div>
+          <div class="product-price">{{item.PRICE}}원</div>
         </div>
       </div>
 
-      <div class="product-card">
-        <img src="../images/ryan2.jpg" alt="상품 2" class="product-img">
-        <div class="product-info">
-          <div class="product-name">아이폰 15</div>
-          <div class="product-price">39,000원</div>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="../images/ryan3.jpg" alt="상품 3" class="product-img">
-        <div class="product-info">
-          <div class="product-name">LG OLED TV</div>
-          <div class="product-price">28,500원</div>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="../images/ryan1.jpg" alt="상품 4" class="product-img">
-        <div class="product-info">
-          <div class="product-name">맥북 에어 M3</div>
-          <div class="product-price">45,000원</div>
-        </div>
-      </div>
-      
-      <div class="product-card">
-        <img src="../images/ryan2.jpg" alt="상품 5" class="product-img">
-        <div class="product-info">
-          <div class="product-name">갤럭시 북4</div>
-          <div class="product-price">19,000원</div>
-        </div>
-      </div>
+     
+     
     </div>
 
     <div class="box footer">하단 영역~~</div>
@@ -112,20 +83,23 @@
         data() {
             return {
                 // 변수 - (key : value)
-                sessionName : ""
+                sessionName : "",
+                list : []
             };
         },
         methods: {
             // 함수(메소드) - (key : function())
-            fnTest : function () {
+            fnGetProduct : function () {
                 let self = this;
                 $.ajax({
-                    url: "",
+                    url: "http://192.168.30.57:3000/product",
                     dataType: "json",
                     type: "GET",
                     data: {},
                     success: function (data) {
-
+                      console.log(data);
+                      self.list = data.list;
+                      
                     }
                 });
             },
@@ -153,6 +127,10 @@
                         prevEl: '.swiper-button-prev',
                     },
                 });
+            },
+            fnView : function(productId){
+              location.href = "product-info.html?productId="+productId;
+              
             }
         }, // methods
         mounted() {
@@ -165,6 +143,7 @@
               location.href = "Login.html";
             }
             self.sessionName = localStorage.getItem("sessionName");
+            self.fnGetProduct();
         }
     });
 
