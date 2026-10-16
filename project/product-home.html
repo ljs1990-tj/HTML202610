@@ -7,6 +7,8 @@
   <title>메인페이지</title>
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8.4.7/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8.4.7/swiper-bundle.min.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -36,6 +38,21 @@
         </div>
         
       </div>
+    </div>
+    <div class="box banner">
+      <div class="swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="banner/banner1.png"></div>
+                <div class="swiper-slide"><img src="banner/banner2.png"></div>
+                <div class="swiper-slide"><img src="banner/banner3.png"></div>
+                <div class="swiper-slide"><img src="banner/banner4.png"></div>
+                <div class="swiper-slide"><img src="banner/banner5.png"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+
     </div>
     <div class="box side">
       <div class="side-title">카테고리</div>
@@ -134,11 +151,28 @@
               localStorage.clear();
               console.log("삭제 후 ==> ", localStorage.getItem("sessionId"));
               location.href = "Login.html";
+            },
+            fnInit: function() {
+                const swiper = new Swiper('.swiper', {
+                    loop: true,
+                    autoplay: {
+                        delay: 2500,
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
             }
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분
             let self = this;
+            self.fnInit();
             console.log(localStorage.getItem("sessionId"));
             if(localStorage.getItem("sessionId") == null){
               alert("로그인 후 이용해주세요.");

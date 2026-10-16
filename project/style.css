@@ -104,13 +104,13 @@ body {
 
   grid-template-columns: 300px 1fr;
   /* 사이드 공간을 위해 2개로 나눔. 250px과 나머지*/
-  /* grid-template-rows: 150px minmax(200px, auto) minmax(800px, auto) 150px; */
-  grid-template-rows: 150px minmax(800px, auto) 150px;
+  grid-template-rows: 150px minmax(200px, auto) minmax(800px, auto) 150px;
+  /* grid-template-rows: 150px minmax(800px, auto) 150px; */
   /* 헤더, 배너, 메인, 푸터 3개 영역 */
 
   grid-template-areas:
     "header header"
-    /* "banner banner" */
+    "banner banner"
     "side content"
     /* 왼쪽은 사이드바, 오른쪽은 콘텐츠 */
     "footer footer";
