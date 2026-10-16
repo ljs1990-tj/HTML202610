@@ -161,14 +161,21 @@
                 $.ajax({
                     url: "http://192.168.30.57:3000/user/login",
                     dataType: "json",
-                    type: "GET",
+                    type: "GET", // 원래대로라면 POST
                     data : param,
                     // data: {userId : self.userId, pwd : self.pwd},
                     success : function (data) {
                         console.log(data);
-                        
-                       
-                        
+                        if(data.message == "success"){
+                            alert(data.info.userName + "님 환영합니다!");
+                            localStorage.setItem("sessionId", data.info.userId);
+                            localStorage.setItem("sessionName", data.info.userName);
+
+                            location.href = "product-home.html";
+                        } else {
+                            alert("아이디/비밀번호 확인하셈");
+                        }
+                                               
                     }
                 });
             }

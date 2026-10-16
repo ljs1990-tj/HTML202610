@@ -31,8 +31,10 @@
         </button>
         <div class="user-profile">
           <div class="avatar">👨‍💻</div>
-          <span class="username">홍길동</span>
+          <span class="username">{{sessionName}}</span>
+          <a @click="fnLogout" style="background-color: #797272; padding : 5px; border-radius: 5px;">로그아웃</a>
         </div>
+        
       </div>
     </div>
     <div class="box side">
@@ -107,6 +109,7 @@
         data() {
             return {
                 // 변수 - (key : value)
+                sessionName : ""
             };
         },
         methods: {
@@ -122,10 +125,26 @@
 
                     }
                 });
+            },
+            fnLogout : function(){
+              if(!confirm("정말 로그아웃??")){
+                return;
+              }
+              console.log("삭제 전 ==> ", localStorage.getItem("sessionId"));
+              localStorage.clear();
+              console.log("삭제 후 ==> ", localStorage.getItem("sessionId"));
+              location.href = "Login.html";
             }
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분
+            let self = this;
+            console.log(localStorage.getItem("sessionId"));
+            if(localStorage.getItem("sessionId") == null){
+              alert("로그인 후 이용해주세요.");
+              location.href = "Login.html";
+            }
+            self.sessionName = localStorage.getItem("sessionName");
         }
     });
 
