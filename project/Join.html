@@ -175,7 +175,8 @@
             <!-- 3. -->
             <!-- 최초 진입 시 버튼 비활성화 -->
             <!-- result가 true(아이디 사용 가능)가 되면 활성화 -->
-            <button class="signup-btn" @click="fnSignUp">가입하기</button> 
+            <!-- <button class="signup-btn" @click="fnSignUp">가입하기</button>  -->
+            <button class="signup-btn-false" @click="fnSignUp" disabled>가입하기</button> 
 
             <div class="bottom-links">
                 이미 계정이 있으신가요? <a href="#">로그인</a>
@@ -208,7 +209,7 @@
                     userId : self.userId
                 };
                 $.ajax({
-                    url: "http://192.168.30.57:3000/id-check",
+                    url: "http://192.168.30.57:3000/user/id-check",
                     dataType: "json",
                     type: "GET",
                     data : param,
