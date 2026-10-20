@@ -19,6 +19,9 @@
     <div id="app">
         <!-- html. 반드시 id가 app인 태그 안에서 작업 -->
         <!-- (script 맨 하단 app.mount('#app'); 여기 아이디와 같아야 함) -->
+        <div style="margin-top : 20px">
+            검색어 : <input v-model="keyword" @keyup.enter="fnList"> <button @click="fnList">검색</button>
+        </div>
         <div style="margin : 20px 0">
             <select v-model="grade" @change="fnList">
                 <option value="">:: 전체 ::</option>
@@ -74,7 +77,8 @@
                 list : [],
                 grade : "",
                 dept : "",
-                orderKey : 1
+                orderKey : 1,
+                keyword : ""
             };
         },
         methods: {
@@ -88,7 +92,8 @@
                     data: {
                         grade : self.grade, 
                         dept : self.dept,
-                        orderKey : self.orderKey
+                        orderKey : self.orderKey,
+                        keyword : self.keyword
                     },
                     success: function (data) {
                         console.log(data);
