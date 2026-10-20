@@ -66,9 +66,24 @@ app.get('/login', async (req, res) => {
 });
 
 app.get('/list', async (req, res) => {
-  const { } = req.query; 
+  const { grade, dept, orderKey } = req.query; 
   try {
-    const result = await connection.execute(`SELECT * FROM STUDENT`); 
+    let gradeSql = "";
+    if(grade != ""){
+      gradeSql = " AND STU_GRADE = " + grade;
+    }
+    let deptSql = dept != "" ? `AND STU_DEPT = '${dept}'` : "";
+
+    let column = 
+        orderKey == 1 ? "STU_DEPT" : orderKey == 2 ? "STU_NAME" : "STU_GRADE";
+    let orderSql = " ORDER BY " + column
+
+
+    let sql = 
+      `SELECT * FROM STUDENT WHERE 1=1 ` + gradeSql + deptSql + orderSql;
+    console.log(sql);
+
+    const result = await connection.execute(sql); 
     const columnNames = result.metaData.map(column => column.name);
     // 쿼리 결과를 JSON 형태로 변환
     const rows = result.rows.map(row => {
