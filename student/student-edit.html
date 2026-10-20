@@ -50,6 +50,8 @@
                     data: {stuNo : self.stuNo},
                     success: function (data) {
                         console.log(data);
+                        self.stuName = data.info.STU_NAME;
+                        self.stuDept = data.info.STU_DEPT;
                     }
                 });
             },
@@ -67,7 +69,8 @@
                     type: "GET",
                     data: param,
                     success: function (data) {
-                        alert(data.result);
+                        alert("수정되었습니다!");
+                        location.href="student-list.html";
                     }
                 });
             }

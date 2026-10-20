@@ -20,10 +20,16 @@
         <!-- html. 반드시 id가 app인 태그 안에서 작업 -->
         <!-- (script 맨 하단 app.mount('#app'); 여기 아이디와 같아야 함) -->
         <div>
-            <div>학번 : <input v-model="stuNo"></div>
+            <div>학번 : <input v-model="stuNo" :disabled="stuNoFlg">
+                        <button @click="fnGetInfo">중복체크</button>
+            </div>
             <div>이름 : <input v-model="stuName"></div>
             <div>학과 : <input v-model="stuDept"></div>
-            <div><button @click="fnAdd">추가</button></div>
+            <div>
+                <!-- <button v-if="stuNoFlg" @click="fnAdd">추가</button>
+                <button v-else @click="fnAdd" disabled>추가</button> -->
+                <button :disabled="!stuNoFlg" @click="fnAdd">추가</button>
+            </div>
         </div>
     </div>
 </body>
@@ -36,7 +42,8 @@
                 // 변수 - (key : value)
                 stuNo : "",
                 stuName : "",
-                stuDept : ""
+                stuDept : "",
+                stuNoFlg : false
             };
         },
         methods: {
@@ -56,6 +63,30 @@
                     data: param,
                     success: function (data) {
                         alert(data.result);
+                    }
+                });
+            },
+            fnGetInfo : function(){
+                let self = this;
+                if(self.stuNo.length != 8){
+                    alert("학번은 8글자 입니다.");
+                    return;
+                }
+
+                $.ajax({
+                    url: "http://localhost:3000/search",
+                    dataType: "json",
+                    type: "GET",
+                    data: {stuNo : self.stuNo},
+                    success: function (data) {
+                        console.log(data.info);
+                        if(data.info == undefined || data.info == null){
+                            alert("사용 가능한 학번입니다!");
+                            self.stuNoFlg = true;
+                        } else {
+                            alert("이미 존재하는 학번입니다.");
+                        }
+                        
                     }
                 });
             }
