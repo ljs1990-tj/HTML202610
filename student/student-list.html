@@ -31,7 +31,7 @@
                 </tr>
                 <tr v-for="item in list">
                     <td>{{item.STU_NO}}</td>
-                    <td>{{item.STU_NAME}}</td>
+                    <td><a href="javascript:;" @click="fnView(item.STU_NO)">{{item.STU_NAME}}</a></td>
                     <td>{{item.STU_DEPT}}</td>
                     <td>{{item.STU_GRADE}}</td>
                     <td><button @click="fnEdit(item.STU_NO)">수정</button></td>
@@ -89,6 +89,9 @@
             },
             fnEdit : function(stuNo){
                 location.href = `student-edit.html?stuNo=${stuNo}`;
+            },
+            fnView : function(stuNo){
+                location.href = `student-view.html?stuNo=${stuNo}`;
             }
         }, // methods
         mounted() {
